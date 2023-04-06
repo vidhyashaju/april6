@@ -30,6 +30,9 @@ class _HomePageState extends State<HomePage> {
     String url = 'https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=$api_key';
     Response res=await get(Uri.parse(url));
     Map response=jsonDecode(res.body);
+    var des=response['weather'][0]['description'];
+     print(des);
+
     print(response);
     setState(() {
       resnew=response;
@@ -45,20 +48,21 @@ print("length:$m");
     return Scaffold(floatingActionButton: FloatingActionButton(onPressed: (){
       getData();
     }),
-      body:
-      ListView.builder(
+      body:ListView.builder(shrinkWrap: true,
     itemCount: resnew.length,
-
     itemBuilder: (context,index){
+        return ListTile(
+        title: Center(child: Text(resnew['weather'][0]['description'])),
+  //  subtitle: Text(resnew['weather'][index]['icon']),
 
-      return ListView.builder(
-        itemCount: resnew.length,
-          itemBuilder:(context, index) {
-          return Text(['weather'][index]['main']);
+        );
+    })
 
-      });
-    },
-    ),
+
+
+
+
+
     );
   }
 }
